@@ -266,22 +266,8 @@ class VideoEditorController extends ChangeNotifier {
   //------------//
   Future<void> _getVideoDimensions() async {
     if (!(_videoHeight > 0 && _videoWidth > 0)) {
-      final info = await _ffprobe.getMediaInformation(file.path);
-      final streams = info.getStreams();
-      int _height = 0;
-      int _width = 0;
-
-      if (streams != null && streams.length > 0) {
-        for (var stream in streams) {
-          final width = stream.getAllProperties()['width'];
-          final height = stream.getAllProperties()['height'];
-          if (width != null && width > _width) _width = width;
-          if (height != null && height > _height) _height = height;
-        }
-      }
-
-      _videoHeight = _height;
-      _videoWidth = _width;
+      _videoHeight = video.value.size.height.round();
+      _videoWidth = video.value.size.width.round();
     }
   }
 
